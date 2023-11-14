@@ -5,6 +5,11 @@ public class SidoDto {
 	private int sidoCode;
 	private String sidoName;
 
+	public SidoDto(int sidoCode, String sidoName) {
+		this.sidoCode = sidoCode;
+		this.sidoName = sidoName;
+	}
+
 	public int getSidoCode() {
 		return sidoCode;
 	}

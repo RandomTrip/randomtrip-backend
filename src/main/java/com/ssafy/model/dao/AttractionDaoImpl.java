@@ -1,6 +1,7 @@
 package com.ssafy.model.dao;
 
 import com.ssafy.model.AttractionInfoDto;
+import com.ssafy.model.SidoDto;
 import com.ssafy.util.DBUtil;
 
 import java.sql.Connection;
@@ -21,9 +22,36 @@ public class AttractionDaoImpl implements AttractionDao {
 	public static AttractionDao getAttractionDao() {
 		return attraction;
 	}
-	
-	
-	@Override
+
+    public List<SidoDto> getSidoList() {
+		List<SidoDto> list = new ArrayList<>();
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = DBUtil.getInstance().getConnection();
+			StringBuilder sql = new StringBuilder("SELECT * FROM sido;");
+
+			PreparedStatement pstat = conn.prepareStatement(sql.toString());
+
+			rs = pstat.executeQuery();
+
+			while(rs.next()) {
+				list.add(new SidoDto(Integer.parseInt(rs.getString("sido_code")),rs.getString("sido_name")));
+			}
+
+			return list;
+
+		}catch(Exception e) {
+
+		}
+
+		return null;
+    }
+
+
+    @Override
 	public List<String> attractionList(AttractionInfoDto attractionInfoDto) {
 		
 		List<String> list = new ArrayList<>();

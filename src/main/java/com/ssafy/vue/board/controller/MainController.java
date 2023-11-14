@@ -1,6 +1,7 @@
 package com.ssafy.vue.board.controller;
 
 import com.ssafy.model.AttractionInfoDto;
+import com.ssafy.model.SidoDto;
 import com.ssafy.model.service.AttractionService;
 import com.ssafy.model.service.AttractionServiceImpl;
 import io.swagger.annotations.Api;
@@ -34,6 +35,17 @@ public class MainController {
 		dto.setContentTypeId(0);
 		return as.attractionList(dto);
 	}
+
+
+	@GetMapping("/sidolist")
+	@ApiOperation(value = "전국 시도 리스트 반환", notes = "특정 시도의 리스트를 반환합니다.")
+	public List<SidoDto> getSidoList() {
+		return as.sidoList();
+	}
+
+
+
+
 	// @GetMapping("/content")
 	// @ApiOperation(value = "특정 종류의 명소 리스트 반환", notes = "특정 종류의 명소 리스트를 반환합니다.")
 	public List<String> getbyContent(@RequestParam("content") int content) {
