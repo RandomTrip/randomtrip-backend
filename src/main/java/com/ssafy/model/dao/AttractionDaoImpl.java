@@ -130,9 +130,9 @@ public class AttractionDaoImpl implements AttractionDao {
 	}
 
 	@Override
-	public List<String> searchByTitle(String title_, int sidoCode_) {
+	public List<AttractionInfoDto> searchByTitle(String title_, int sidoCode_) {
 		
-		List<String> list = new ArrayList<>();
+		List<AttractionInfoDto> list = new ArrayList<>();
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -181,7 +181,7 @@ public class AttractionDaoImpl implements AttractionDao {
 				String mlevel = rs.getString(15);
 				
 				list.add(new AttractionInfoDto(contentId, contentTypeId, title, addr1, addr2, zipcode,
-						tel, firstImage,firstImage2, readcount, sidoCode, gugunCode, latitude, longitude, mlevel).toString());
+						tel, firstImage,firstImage2, readcount, sidoCode, gugunCode, latitude, longitude, mlevel));
 			}
 			
 		} catch (SQLException e) {

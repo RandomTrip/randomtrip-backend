@@ -23,7 +23,7 @@ public class AttractionServiceImpl implements AttractionService{
 	}
 
 	@Override
-	public List<String> searchByTitle(String title, int sidoCode) {
+	public List<AttractionInfoDto> searchByTitle(String title, int sidoCode) {
 		return AttractionDaoImpl.getAttractionDao().searchByTitle(title, sidoCode);
 	}
 
@@ -31,4 +31,5 @@ public class AttractionServiceImpl implements AttractionService{
 	public List<SidoDto> sidoList() {
 		return AttractionDaoImpl.getAttractionDao().getSidoList();
 	}
+
 }

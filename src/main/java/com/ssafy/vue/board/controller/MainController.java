@@ -1,5 +1,6 @@
 package com.ssafy.vue.board.controller;
 
+import com.ssafy.model.AttractionDetailDto;
 import com.ssafy.model.AttractionInfoDto;
 import com.ssafy.model.SidoDto;
 import com.ssafy.model.service.AttractionService;
@@ -34,6 +35,12 @@ public class MainController {
 		dto.setSidoCode(sido);
 		dto.setContentTypeId(0);
 		return as.attractionList(dto);
+	}
+
+	@GetMapping("/search")
+	@ApiOperation(value = "이름으로 검색", notes = "이름으로 명소를 검색하고 결과 리스트를 반환합니다.")
+	public List<AttractionInfoDto> search(@RequestParam("title") String title) {
+		return as.searchByTitle(title, 0);
 	}
 
 

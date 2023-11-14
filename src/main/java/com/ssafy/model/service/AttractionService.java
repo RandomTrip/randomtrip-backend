@@ -9,7 +9,8 @@ public interface AttractionService {
 
 	List<String> attractionList(AttractionInfoDto attractionInfoDto);
 
-	List<String> searchByTitle(String title, int sidoCode);
+	List<AttractionInfoDto> searchByTitle(String title, int sidoCode);
 
 	List<SidoDto> sidoList();
+
 }

@@ -8,6 +8,6 @@ import java.util.List;
 public interface AttractionDao {
 
 	List<String> attractionList(AttractionInfoDto attractionInfoDto);
-	List<String> searchByTitle(String title, int sidoCode);
+	List<AttractionInfoDto> searchByTitle(String title, int sidoCode);
 	public List<SidoDto> getSidoList();
 }
