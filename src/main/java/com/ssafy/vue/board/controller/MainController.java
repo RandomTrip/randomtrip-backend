@@ -17,8 +17,8 @@ import java.util.List;
 @Api(tags = "Attraction", description = "Attraction 관련 API")
 public class MainController {
 	private AttractionService as = AttractionServiceImpl.getAttractionService();
-	@GetMapping
-	@ApiOperation(value = "모든 명소 리스트 반환", notes = "모든 명소의 리스트를 반환합니다.")
+	// @GetMapping
+	// @ApiOperation(value = "모든 명소 리스트 반환", notes = "모든 명소의 리스트를 반환합니다.")
 	public List<String> getAll() {
 		AttractionInfoDto dto = new AttractionInfoDto();
 		dto.setSidoCode(0);
@@ -34,16 +34,16 @@ public class MainController {
 		dto.setContentTypeId(0);
 		return as.attractionList(dto);
 	}
-	@GetMapping("/content")
-	@ApiOperation(value = "특정 종류의 명소 리스트 반환", notes = "특정 종류의 명소 리스트를 반환합니다.")
+	// @GetMapping("/content")
+	// @ApiOperation(value = "특정 종류의 명소 리스트 반환", notes = "특정 종류의 명소 리스트를 반환합니다.")
 	public List<String> getbyContent(@RequestParam("content") int content) {
 		AttractionInfoDto dto = new AttractionInfoDto();
 		dto.setSidoCode(0);
 		dto.setContentTypeId(content);
 		return as.attractionList(dto);
 	}
-	@GetMapping("/sido/content")
-	@ApiOperation(value = "특정 시도와 종류의 명소 리스트 반환", notes = "특정 시도와 종류의 명소 리스트를 반환합니다.")
+	// @GetMapping("/sido/content")
+	// @ApiOperation(value = "특정 시도와 종류의 명소 리스트 반환", notes = "특정 시도와 종류의 명소 리스트를 반환합니다.")
 	public List<String> getbyContent(@RequestParam("sido") int sido, @RequestParam("content") int content) {
 		AttractionInfoDto dto = new AttractionInfoDto();
 		dto.setSidoCode(sido);
