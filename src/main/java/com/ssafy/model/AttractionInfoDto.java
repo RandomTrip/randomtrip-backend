@@ -160,13 +160,14 @@ public class AttractionInfoDto {
 		this.mlevel = mlevel;
 	}
 
-	@Override
-	public String toString() {
-		return "AttractionInfoDto [contentId=" + contentId + ", contentTypeId=" + contentTypeId + ", title=" + title
-				+ ", addr1=" + addr1 + ", addr2=" + addr2 + ", zipcode=" + zipcode + ", firstImage=" + firstImage
-				+ ", firstImage2=" + firstImage2 + ", readcount=" + readcount + ", sidoCode=" + sidoCode
-				+ ", gugunCode=" + gugunCode + ", latitude=" + latitude + ", longitude=" + longitude + ", mlevel="
-				+ mlevel + "]";
-	}
+
+//	@Override
+//	public String toString() {
+//		return "AttractionInfoDto [contentId=" + contentId + ", contentTypeId=" + contentTypeId + ", title=" + title
+//				+ ", addr1=" + addr1 + ", addr2=" + addr2 + ", zipcode=" + zipcode + ", firstImage=" + firstImage
+//				+ ", firstImage2=" + firstImage2 + ", readcount=" + readcount + ", sidoCode=" + sidoCode
+//				+ ", gugunCode=" + gugunCode + ", latitude=" + latitude + ", longitude=" + longitude + ", mlevel="
+//				+ mlevel + "]";
+//	}
 
 }

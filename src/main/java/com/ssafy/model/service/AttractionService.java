@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface AttractionService {
 
-	List<String> attractionList(AttractionInfoDto attractionInfoDto);
+	List<AttractionInfoDto> attractionList(AttractionInfoDto attractionInfoDto);
 
 	List<AttractionInfoDto> searchByTitle(String title, int sidoCode);
 

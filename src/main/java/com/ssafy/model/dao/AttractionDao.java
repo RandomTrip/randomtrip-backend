@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface AttractionDao {
 
-	List<String> attractionList(AttractionInfoDto attractionInfoDto);
+	List<AttractionInfoDto> attractionList(AttractionInfoDto attractionInfoDto);
 	List<AttractionInfoDto> searchByTitle(String title, int sidoCode);
 	public List<SidoDto> getSidoList();
 }

@@ -21,16 +21,16 @@ public class MainController {
 	private AttractionService as = AttractionServiceImpl.getAttractionService();
 	// @GetMapping
 	// @ApiOperation(value = "모든 명소 리스트 반환", notes = "모든 명소의 리스트를 반환합니다.")
-	public List<String> getAll() {
+	public List<AttractionInfoDto> getAll() {
 		AttractionInfoDto dto = new AttractionInfoDto();
 		dto.setSidoCode(0);
 		dto.setContentTypeId(0);
-		List<String> result = as.attractionList(dto);
+		List<AttractionInfoDto> result = as.attractionList(dto);
 		return result;
 	}
 	@GetMapping("/sido")
 	@ApiOperation(value = "특정 시도의 명소 리스트 반환", notes = "특정 시도의 명소 리스트를 반환합니다.")
-	public List<String> getbySido(@RequestParam("sido") int sido) {
+	public List<AttractionInfoDto> getbySido(@RequestParam("sido") int sido) {
 		AttractionInfoDto dto = new AttractionInfoDto();
 		dto.setSidoCode(sido);
 		dto.setContentTypeId(0);
@@ -55,7 +55,7 @@ public class MainController {
 
 	// @GetMapping("/content")
 	// @ApiOperation(value = "특정 종류의 명소 리스트 반환", notes = "특정 종류의 명소 리스트를 반환합니다.")
-	public List<String> getbyContent(@RequestParam("content") int content) {
+	public List<AttractionInfoDto> getbyContent(@RequestParam("content") int content) {
 		AttractionInfoDto dto = new AttractionInfoDto();
 		dto.setSidoCode(0);
 		dto.setContentTypeId(content);
@@ -63,7 +63,7 @@ public class MainController {
 	}
 	// @GetMapping("/sido/content")
 	// @ApiOperation(value = "특정 시도와 종류의 명소 리스트 반환", notes = "특정 시도와 종류의 명소 리스트를 반환합니다.")
-	public List<String> getbyContent(@RequestParam("sido") int sido, @RequestParam("content") int content) {
+	public List<AttractionInfoDto> getbyContent(@RequestParam("sido") int sido, @RequestParam("content") int content) {
 		AttractionInfoDto dto = new AttractionInfoDto();
 		dto.setSidoCode(sido);
 		dto.setContentTypeId(content);

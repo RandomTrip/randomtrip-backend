@@ -18,7 +18,7 @@ public class AttractionServiceImpl implements AttractionService{
 	}
 	
 	@Override
-	public List<String> attractionList(AttractionInfoDto attractionInfoDto) {
+	public List<AttractionInfoDto> attractionList(AttractionInfoDto attractionInfoDto) {
 		return  AttractionDaoImpl.getAttractionDao().attractionList(attractionInfoDto);
 	}
 

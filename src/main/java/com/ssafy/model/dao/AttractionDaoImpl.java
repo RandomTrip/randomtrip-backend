@@ -52,9 +52,9 @@ public class AttractionDaoImpl implements AttractionDao {
 
 
     @Override
-	public List<String> attractionList(AttractionInfoDto attractionInfoDto) {
+	public List<AttractionInfoDto> attractionList(AttractionInfoDto attractionInfoDto) {
 		
-		List<String> list = new ArrayList<>();
+		List<AttractionInfoDto> list = new ArrayList<>();
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -117,7 +117,7 @@ public class AttractionDaoImpl implements AttractionDao {
 				String mlevel = rs.getString(15);
 				
 				list.add(new AttractionInfoDto(contentId, contentTypeId, title, addr1, addr2, zipcode,
-						tel, firstImage,firstImage2, readcount, sidoCode, gugunCode, latitude, longitude, mlevel).toString());
+						tel, firstImage,firstImage2, readcount, sidoCode, gugunCode, latitude, longitude, mlevel));
 			}
 			
 		} catch (SQLException e) {
