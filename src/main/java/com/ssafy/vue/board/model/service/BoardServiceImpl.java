@@ -47,9 +47,16 @@ public class BoardServiceImpl implements BoardService {
 
 		String key = map.get("key");
 		param.put("key", key == null ? "" : key);
-		if ("user_id".equals(key))
+
+		String isPublic = "and is_public = 1";
+		if ("user_id".equals(key)) {
 			param.put("key", key == null ? "" : "b.user_id");
+			isPublic = "";
+		}
+		param.put("isPublic", isPublic);
+
 		List<BoardDto> list = boardMapper.listArticle(param);
+
 
 		if ("user_id".equals(key))
 			param.put("key", key == null ? "" : "user_id");

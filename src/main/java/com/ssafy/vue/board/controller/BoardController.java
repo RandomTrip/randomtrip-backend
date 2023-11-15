@@ -85,7 +85,7 @@ http://localhost/vue/board
 
 	// http://localhost/vue/board?pgno=2&&spp20
 	// http://localhost/vue/board?pgno=1&&spp20
-	@ApiOperation(value = "게시판 여행정보 목록", notes = "pgno=1&&spp20&&user=ssafy: 20개씩 페이징 1페이지. ssafy 유저의 '나의 여행 계획' pgno=1&&spp20: 20개씩 1페이지. 여행 계획 공유 리스트", response = List.class)
+	@ApiOperation(value = "게시판 여행정보 목록", notes = "http://localhost/vue/board?pgno=1&&spp=20&&key=user_id&&word=admin: user_id가 'admin'인 유저의 '나의 여행 계획' 20개씩 페이징해서 1페이지 데이터를 리턴.  pgno=1&&spp20: 20개씩 1페이지. 모든 유저의 여행 계획 공유 리스트 (is_public 이 1 인 게시물만을 읽어옴.)", response = List.class)
 	@ApiResponses({ @ApiResponse(code = 200, message = "회원목록 OK!!"), @ApiResponse(code = 404, message = "페이지없어!!"),
 			@ApiResponse(code = 500, message = "서버에러!!") })
 	@GetMapping

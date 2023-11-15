@@ -59,21 +59,10 @@
 		from board b, members m 
 		where b.user_id = m.user_id
 		<include refid="search"></include>
+		${isPublic}
 		order by b.article_no desc
 		limit #{start}, #{listsize}
 	</select>
-
-	<!--
-	<select id="listArticle" parameterType="map" resultMap="article">
-		select b.article_no, b.user_id, b.subject, b.content, b.hit, b.register_time, m.user_name, b.is_public, b.category, b.attraction_list
-		from board b, members m
-		where b.user_id = m.user_id
-		<include refid="search"></include>
-		order by b.article_no desc
-		limit #{start}, #{listsize}
-	</select>
-
-	 -->
 	
 	<select id="getTotalArticleCount" parameterType="map" resultType="int">
 		select count(article_no)
