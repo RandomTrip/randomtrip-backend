@@ -1,6 +1,7 @@
 package com.ssafy.vue.board.controller;
 
 import java.nio.charset.Charset;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -85,7 +86,7 @@ http://localhost/vue/board
 
 	// http://localhost/vue/board?pgno=2&&spp20
 	// http://localhost/vue/board?pgno=1&&spp20
-	@ApiOperation(value = "게시판 여행정보 목록", notes = "http://localhost/vue/board?pgno=1&&spp=20&&key=user_id&&word=admin: user_id가 'admin'인 유저의 '나의 여행 계획' 20개씩 페이징해서 1페이지 데이터를 리턴.  pgno=1&&spp20: 20개씩 1페이지. 모든 유저의 여행 계획 공유 리스트 (is_public 이 1 인 게시물만을 읽어옴.)", response = List.class)
+	@ApiOperation(value = "여행정보 목록 (나의 여행 계획, 공유된 여행 계획)", notes = "http://localhost/vue/board?pgno=1&&spp=20&&key=user_id&&word=admin: user_id가 'admin'인 유저의 '나의 여행 계획' 20개씩 페이징해서 1페이지 데이터를 리턴.  pgno=1&&spp20: 20개씩 1페이지. 모든 유저의 여행 계획 공유 리스트 (is_public 이 1 인 게시물만을 읽어옴.)", response = List.class)
 	@ApiResponses({ @ApiResponse(code = 200, message = "회원목록 OK!!"), @ApiResponse(code = 404, message = "페이지없어!!"),
 			@ApiResponse(code = 500, message = "서버에러!!") })
 	@GetMapping
@@ -102,7 +103,26 @@ http://localhost/vue/board
 		}
 	}
 
-	@ApiOperation(value = "게시판 글보기", notes = "글번호에 해당하는 게시글의 정보를 반환한다.", response = BoardDto.class)
+	@ApiOperation(value = "공유 가능 설정", notes = "http://localhost/vue/board/public?articleno=3&ispublic=1  : 3번 게시물을 공유 가능(1)으로 수정", response = BoardDto.class)
+	@GetMapping("public")
+	public BoardDto setPublic(
+			@RequestParam @ApiParam(value = "공유가능 유무를 설정하기 위한 매개변수 (articleno: 3, ispublic: 0, 1)", required = true) Map<String, String> map)
+			throws Exception {
+
+		Map<String, Integer> paramMap = new HashMap<>();
+		paramMap.put("articleno", Integer.parseInt(map.get("articleno"))); // articleNo 값 설정
+		paramMap.put("ispublic", Integer.parseInt(map.get("ispublic"))); // isPublic 값 설정
+
+
+
+		boardService.setPublic(paramMap);
+
+		return null;
+	}
+
+
+
+	@ApiOperation(value = "여행 계획 상세보기", notes = "글번호에 해당하는 게시글의 정보를 반환한다.", response = BoardDto.class)
 	@GetMapping("/{articleno}")
 	public BoardDto getArticle(
 			@PathVariable("articleno") @ApiParam(value = "얻어올 글의 글번호.", required = true) int articleno)
@@ -112,8 +132,8 @@ http://localhost/vue/board
 		return boardService.getArticle(articleno);
 	}
 
-	@ApiOperation(value = "수정 할 글 얻기", notes = "글번호에 해당하는 게시글의 정보를 반환한다.", response = BoardDto.class)
-	@GetMapping("/modify/{articleno}")
+	//@ApiOperation(value = "수정 할 글 얻기", notes = "글번호에 해당하는 게시글의 정보를 반환한다.", response = BoardDto.class)
+	//@GetMapping("/modify/{articleno}")
 	public ResponseEntity<BoardDto> getModifyArticle(
 			@PathVariable("articleno") @ApiParam(value = "얻어올 글의 글번호.", required = true) int articleno)
 			throws Exception {
@@ -121,8 +141,8 @@ http://localhost/vue/board
 		return new ResponseEntity<BoardDto>(boardService.getArticle(articleno), HttpStatus.OK);
 	}
 
-	@ApiOperation(value = "게시판 글수정", notes = "수정할 게시글 정보를 입력한다. 그리고 DB수정 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
-	@PutMapping
+	//@ApiOperation(value = "게시판 글수정", notes = "수정할 게시글 정보를 입력한다. 그리고 DB수정 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
+	//@PutMapping
 	public ResponseEntity<String> modifyArticle(
 			@RequestBody @ApiParam(value = "수정할 글정보.", required = true) BoardDto boardDto) throws Exception {
 		logger.info("modifyArticle - 호출 {}", boardDto);
@@ -131,9 +151,9 @@ http://localhost/vue/board
 		return ResponseEntity.ok().build();
 	}
 	
-	@ApiOperation(value = "게시판 글삭제", notes = "글번호에 해당하는 게시글의 정보를 삭제한다. 그리고 DB삭제 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
+	@ApiOperation(value = "여행계획 글삭제", notes = "글번호(article_no)에 해당하는 게시글의 정보를 삭제한다. 그리고 DB삭제 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
 	@DeleteMapping("/{articleno}")
-	public ResponseEntity<String> deleteArticle(@PathVariable("articleno") @ApiParam(value = "살제할 글의 글번호.", required = true) int articleno) throws Exception {
+	public ResponseEntity<String> deleteArticle(@PathVariable("articleno") @ApiParam(value = "삭제할 글의 글번호.", required = true) int articleno) throws Exception {
 		logger.info("deleteArticle - 호출");
 		boardService.deleteArticle(articleno);
 		return ResponseEntity.ok().build();

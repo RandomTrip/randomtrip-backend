@@ -16,5 +16,6 @@ public interface BoardService {
 	void modifyArticle(BoardDto boardDto) throws Exception;
 //	
 	void deleteArticle(int articleNo) throws Exception;
-	
+
+	public void setPublic(Map<String, Integer> map) throws Exception;
 }

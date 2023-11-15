@@ -135,4 +135,10 @@ public class BoardServiceImpl implements BoardService {
 		boardMapper.deleteArticle(articleNo);
 	}
 
+	@Override
+	public void setPublic(Map<String, Integer> map) throws Exception{
+		boardMapper.setPublic(map);
+	}
+
+
 }

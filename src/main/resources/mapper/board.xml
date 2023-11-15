@@ -63,6 +63,12 @@
 		order by b.article_no desc
 		limit #{start}, #{listsize}
 	</select>
+
+	<update id="setPublic" parameterType="map">
+		UPDATE board
+		SET is_public = #{ispublic}
+		WHERE article_no = #{articleno}
+	</update>
 	
 	<select id="getTotalArticleCount" parameterType="map" resultType="int">
 		select count(article_no)
