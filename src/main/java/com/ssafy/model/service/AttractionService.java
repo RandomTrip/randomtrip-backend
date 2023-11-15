@@ -13,4 +13,6 @@ public interface AttractionService {
 
 	List<SidoDto> sidoList();
 
+	List<AttractionInfoDto> getAttractionData(List<String> list);
+
 }

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -51,7 +52,15 @@ public class MainController {
 	}
 
 
+	@GetMapping("/attractionlist")
+	@ApiOperation(value = "여행지 리스트 정보 가져오기", notes = "content_id 리스트를 받아서 해당하는 여행지의 데이터를 반환합니다. ex) http://localhost/vue/attractionlist?list=125411,125418,125431,125448,125465,125478 : 여행지 리스트 전체 데이터 순서대로 반환. http://localhost/vue/attractionlist?list=125411 : 125411(한개) 번 여행지 데이터 반환")
+	public List<AttractionInfoDto> getbyContentIdList(@RequestParam("list") String ids) {
 
+
+		List<String> idList = Arrays.asList(ids.split(","));
+
+		return as.getAttractionData(idList);
+	}
 
 	// @GetMapping("/content")
 	// @ApiOperation(value = "특정 종류의 명소 리스트 반환", notes = "특정 종류의 명소 리스트를 반환합니다.")

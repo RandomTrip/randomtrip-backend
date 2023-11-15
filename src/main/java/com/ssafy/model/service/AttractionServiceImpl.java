@@ -32,4 +32,9 @@ public class AttractionServiceImpl implements AttractionService{
 		return AttractionDaoImpl.getAttractionDao().getSidoList();
 	}
 
+	@Override
+	public List<AttractionInfoDto> getAttractionData(List<String> list) {
+		return AttractionDaoImpl.getAttractionDao().getAttractionData(list);
+	}
+
 }
