@@ -12,11 +12,14 @@
 		<result column="content" property="content"/>
 		<result column="hit" property="hit"/>
 		<result column="register_time" property="registerTime"/>
+		<result column="attraction_list" property="attractionList"/>
+		<result column="is_public" property="isPublic"/>
+		<result column="category" property="category"/>
 	</resultMap>
 	
-	<resultMap type="boardDto" id="viewArticle" extends="article">
-		<collection property="fileInfos" column="article_no" javaType="list" ofType="fileInfoDto" select="fileInfoList"/>
-	</resultMap>
+<!--	<resultMap type="boardDto" id="viewArticle" extends="article">-->
+<!--		<collection property="fileInfos" column="article_no" javaType="list" ofType="fileInfoDto" select="fileInfoList"/>-->
+<!--	</resultMap>-->
 	
 	<resultMap type="fileInfoDto" id="file">
 		<result column="save_folder" property="saveFolder"/>
@@ -25,8 +28,8 @@
 	</resultMap>
 
 	<insert id="writeArticle" parameterType="boardDto">
-		insert into board (user_id, subject, content, hit, register_time)
-		values (#{userId}, #{subject}, #{content}, 0, now())
+		insert into board (user_id, subject, content, attraction_list, is_public, hit, register_time)
+		values (#{userId}, #{subject}, #{content}, #{attractionList}, #{isPublic}, 0, now())
 		<selectKey resultType="int" keyProperty="articleNo" order="AFTER">
 			select last_insert_id()
 		</selectKey>
@@ -52,13 +55,25 @@
 	</sql>
 
 	<select id="listArticle" parameterType="map" resultMap="article">
-		select b.article_no, b.user_id, b.subject, b.content, b.hit, b.register_time, m.user_name
+		select b.article_no, b.user_id, b.subject, b.content, b.hit, b.register_time, m.user_name, b.is_public, b.category, b.attraction_list
 		from board b, members m 
 		where b.user_id = m.user_id
 		<include refid="search"></include>
 		order by b.article_no desc
 		limit #{start}, #{listsize}
 	</select>
+
+	<!--
+	<select id="listArticle" parameterType="map" resultMap="article">
+		select b.article_no, b.user_id, b.subject, b.content, b.hit, b.register_time, m.user_name, b.is_public, b.category, b.attraction_list
+		from board b, members m
+		where b.user_id = m.user_id
+		<include refid="search"></include>
+		order by b.article_no desc
+		limit #{start}, #{listsize}
+	</select>
+
+	 -->
 	
 	<select id="getTotalArticleCount" parameterType="map" resultType="int">
 		select count(article_no)
@@ -68,8 +83,8 @@
 		</where>
 	</select>
 	
-	<select id="getArticle" parameterType="int" resultMap="viewArticle">
-		select b.article_no, b.user_id, b.subject, b.content, b.hit, b.register_time, m.user_name 
+	<select id="getArticle" parameterType="int" resultMap="article">
+		select b.article_no, b.user_id, b.subject, b.content, b.hit, b.register_time, m.user_name, b.is_public, b.category, b.attraction_list
 		from board b, members m
 		where b.user_id = m.user_id
 		and b.article_no = #{articleNo}

@@ -25,6 +25,17 @@ public class BoardDto {
 	@ApiModelProperty(value = "업로드 파일정보")
 	private List<FileInfoDto> fileInfos;
 
+
+	@ApiModelProperty(value = "attraction 리스트")
+	private String attractionList;
+
+	@ApiModelProperty(value = "공개 여부")
+	private int isPublic;
+
+	@ApiModelProperty(value = "카테고리")
+	private int category;
+
+
 	public int getArticleNo() {
 		return articleNo;
 	}
@@ -89,11 +100,45 @@ public class BoardDto {
 		this.fileInfos = fileInfos;
 	}
 
-	@Override
-	public String toString() {
-		return "BoardDto [articleNo=" + articleNo + ", userId=" + userId + ", userName=" + userName + ", subject="
-				+ subject + ", content=" + content + ", hit=" + hit + ", registerTime=" + registerTime + ", fileInfos="
-				+ fileInfos + "]";
+	public String getAttractionList() {
+		return attractionList;
 	}
 
+	public void setAttractionList(String attractionList) {
+		this.attractionList = attractionList;
+	}
+
+	public int getIsPublic() {
+		return isPublic;
+	}
+
+	public void setIsPublic(int isPublic) {
+		this.isPublic = isPublic;
+	}
+
+	public int getCategory() {
+		return category;
+	}
+
+	public void setCategory(int category) {
+		this.category = category;
+	}
+
+
+	@Override
+	public String toString() {
+		return "BoardDto{" +
+				"articleNo=" + articleNo +
+				", userId='" + userId + '\'' +
+				", userName='" + userName + '\'' +
+				", subject='" + subject + '\'' +
+				", content='" + content + '\'' +
+				", hit=" + hit +
+				", registerTime='" + registerTime + '\'' +
+				", fileInfos=" + fileInfos +
+				", attractionList='" + attractionList + '\'' +
+				", isPublic=" + isPublic +
+				", category=" + category +
+				'}';
+	}
 }

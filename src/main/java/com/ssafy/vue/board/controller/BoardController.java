@@ -50,21 +50,42 @@ public class BoardController {
 		this.boardService = boardService;
 	}
 
-	@ApiOperation(value = "게시판 글작성", notes = "새로운 게시글 정보를 입력한다.")
+
+
+	/*
+
+post
+http://localhost/vue/board
+{
+    "userId": "admin",
+    "userName": "사용자 이름",
+    "subject": "글 제목",
+    "content": "글 내용",
+    "attractionList": "125411,125418,125431,125448,125465,125478",
+    "isPublic": 0,
+    "category": 1
+}
+
+*/
+	@ApiOperation(value = "나의 여행 계획작성", notes = "나의 여행 계획. attractionList 는 content_id  띄어쓰기 없이 , 로 구분 :(ex =>'125411,125418,125431,125448,125465,125478') isPublic 는 공개 여부 (0: 비공개, 1: 공개) 공개 여부는 나중에 수정 가능")
 	@PostMapping
 	public ResponseEntity<?> writeArticle(
 			@RequestBody @ApiParam(value = "게시글 정보.", required = true) BoardDto boardDto) {
 		logger.info("writeArticle boardDto - {}", boardDto);
 		try {
+			System.out.println(boardDto);
 			boardService.writeArticle(boardDto);
-//			return ResponseEntity.ok().build();
+
+			//			return ResponseEntity.ok().build();
 			return new ResponseEntity<Void>(HttpStatus.CREATED);
 		} catch (Exception e) {
 			return exceptionHandling(e);
 		}
 	}
 
-	@ApiOperation(value = "게시판 글목록", notes = "모든 게시글의 정보를 반환한다.", response = List.class)
+	// http://localhost/vue/board?pgno=2&&spp20
+	// http://localhost/vue/board?pgno=1&&spp20
+	@ApiOperation(value = "게시판 여행정보 목록", notes = "pgno=1&&spp20&&user=ssafy: 20개씩 페이징 1페이지. ssafy 유저의 '나의 여행 계획' pgno=1&&spp20: 20개씩 1페이지. 여행 계획 공유 리스트", response = List.class)
 	@ApiResponses({ @ApiResponse(code = 200, message = "회원목록 OK!!"), @ApiResponse(code = 404, message = "페이지없어!!"),
 			@ApiResponse(code = 500, message = "서버에러!!") })
 	@GetMapping
@@ -83,12 +104,12 @@ public class BoardController {
 
 	@ApiOperation(value = "게시판 글보기", notes = "글번호에 해당하는 게시글의 정보를 반환한다.", response = BoardDto.class)
 	@GetMapping("/{articleno}")
-	public ResponseEntity<BoardDto> getArticle(
+	public BoardDto getArticle(
 			@PathVariable("articleno") @ApiParam(value = "얻어올 글의 글번호.", required = true) int articleno)
 			throws Exception {
 		logger.info("getArticle - 호출 : " + articleno);
-		boardService.updateHit(articleno);
-		return new ResponseEntity<BoardDto>(boardService.getArticle(articleno), HttpStatus.OK);
+		// boardService.updateHit(articleno);
+		return boardService.getArticle(articleno);
 	}
 
 	@ApiOperation(value = "수정 할 글 얻기", notes = "글번호에 해당하는 게시글의 정보를 반환한다.", response = BoardDto.class)

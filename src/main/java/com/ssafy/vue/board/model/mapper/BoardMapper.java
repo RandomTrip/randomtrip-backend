@@ -30,6 +30,6 @@ public interface BoardMapper {
 
 	void deleteArticle(int articleNo) throws SQLException;
 
-	List<FileInfoDto> fileInfoList(int articleNo) throws Exception;
+//	List<FileInfoDto> fileInfoList(int articleNo) throws Exception;
 	
 }
