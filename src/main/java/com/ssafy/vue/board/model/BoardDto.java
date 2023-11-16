@@ -27,7 +27,9 @@ public class BoardDto {
 
 
 	@ApiModelProperty(value = "attraction 리스트")
-	private String attractionList;
+	private List<String> listAttraction;
+
+	private String attractionList; // 서버 저장용
 
 	@ApiModelProperty(value = "공개 여부")
 	private int isPublic;
@@ -123,6 +125,16 @@ public class BoardDto {
 	public void setCategory(int category) {
 		this.category = category;
 	}
+
+
+	public List<String> getListAttraction() {
+		return listAttraction;
+	}
+
+	public void setListAttraction(List<String> listAttraction) {
+		this.listAttraction = listAttraction;
+	}
+
 
 
 	@Override

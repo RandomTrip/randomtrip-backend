@@ -1,9 +1,11 @@
 package com.ssafy.vue.board.model.service;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,11 +30,19 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	@Transactional
 	public void writeArticle(BoardDto boardDto) throws Exception {
+		boardDto.setAttractionList(boardDto.getListAttraction().stream().collect(Collectors.joining(",")));
+		// 서버 저장용 String 데이터 설정
+
+		System.out.println(boardDto.getAttractionList());
+
 		boardMapper.writeArticle(boardDto);
-		List<FileInfoDto> fileInfos = boardDto.getFileInfos();
-		if (fileInfos != null && !fileInfos.isEmpty()) {
-			boardMapper.registerFile(boardDto);
-		}
+
+
+
+//		List<FileInfoDto> fileInfos = boardDto.getFileInfos();
+//		if (fileInfos != null && !fileInfos.isEmpty()) {
+//			boardMapper.registerFile(boardDto);
+//		}
 	}
 
 	@Override
@@ -57,6 +67,11 @@ public class BoardServiceImpl implements BoardService {
 
 		List<BoardDto> list = boardMapper.listArticle(param);
 
+		for(int i = 0; i < list.size(); i++) {
+			BoardDto dto = list.get(i);
+			dto.setListAttraction(Arrays.asList(dto.getAttractionList().split(",")));
+			list.set(i, dto);
+		}
 
 		if ("user_id".equals(key))
 			param.put("key", key == null ? "" : "user_id");
