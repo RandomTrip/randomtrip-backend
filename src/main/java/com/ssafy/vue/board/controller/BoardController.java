@@ -54,23 +54,21 @@ public class BoardController {
 	}
 
 
-
-	/*
-
-post
-http://localhost/vue/board
-{
-    "userId": "admin",
-    "userName": "사용자 이름",
-    "subject": "글 제목",
-    "content": "글 내용",
-    "attractionList": "125411,125418,125431,125448,125465,125478",
-    "isPublic": 0,
-    "category": 1
-}
-
-*/
-	@ApiOperation(value = "나의 여행 계획작성", notes = "나의 여행 계획. attractionList 는 content_id  띄어쓰기 없이 , 로 구분 :(ex =>'125411,125418,125431,125448,125465,125478') isPublic 는 공개 여부 (0: 비공개, 1: 공개) 공개 여부는 나중에 수정 가능")
+	@ApiOperation(value = "나의 여행 계획작성", notes = "나의 여행 계획. " +
+			" - post 예시" +
+			"post\n" +
+			"http://localhost/vue/board" +
+			"{\n" +
+			"    \"userId\": \"admin\",\n" +
+			"    \"userName\": \"사용자 이름\",\n" +
+			"    \"subject\": \"글 제목\",\n" +
+			"    \"content\": \"글 내용\",\n" +
+			"    \"listAttraction\": [\"125411\", \"125418\", \"125431\"],\n" +
+			"    \"isPublic\": 1,\n" +
+			"    \"category\": 1\n" +
+			"} " +
+			"" +
+			"isPublic 는 공개 여부 (0: 비공개, 1: 공개) 공개 여부는 나중에 수정 가능")
 	@PostMapping
 	public ResponseEntity<?> writeArticle(
 			@RequestBody @ApiParam(value = "게시글 정보.", required = true) BoardDto boardDto) {
