@@ -1,65 +1,47 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
-	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.ssafy.member.model.mapper.MemberMapper">
+<mapper namespace="com.ssafy.vue.member.model.mapper.MemberMapper">
 
-	<!-- <resultMap type="memberDto" id="member">
+	<resultMap type="memberDto" id="member">
 		<result column="user_id" property="userId"/>
 		<result column="user_name" property="userName"/>
-	</resultMap>
-	
-	ADMIN
-	<resultMap type="memberDto" id="memberAll" extends="member">
 		<result column="user_password" property="userPwd"/>
 		<result column="email_id" property="emailId"/>
 		<result column="email_domain" property="emailDomain"/>
 		<result column="join_date" property="joinDate"/>
+		<result column="token" property="refreshToken"/>
 	</resultMap>
 
-	<select id="idCheck" parameterType="String" resultType="int">
-		select count(user_id)
+	<select id="login" parameterType="map" resultMap="member">
+		select user_id, user_name, token
 		from members
-		where user_id = #{userid}
+		where user_id = #{userId} and user_password = #{userPwd}
 	</select>
 
-	<insert id="joinMember" parameterType="memberDto">
-		insert into members (user_name, user_id, user_password, email_id, email_domain, join_date)
-		values (#{userName}, #{userId}, #{userPwd}, #{emailId}, #{emailDomain}, now())
-	</insert>
-
-	<select id="loginMember" parameterType="map" resultMap="member">
-		select user_id, user_name
-		from members
-		where user_id = #{userid} and user_password = #{userpwd}
-	</select>
-	
-	ADMIN
-	<select id="listMember" resultMap="memberAll">
-		select user_name, user_id, user_password, email_id, email_domain, join_date
-		from members
-		order by join_date
-	</select>
-	
-	<select id="getMember" parameterType="string" resultMap="memberAll">
-		select user_id, user_name, user_password, email_id, email_domain, join_date
+	<select id="userInfo" parameterType="string" resultMap="member">
+		select user_name, user_id, email_id, email_domain, join_date
 		from members
 		where user_id = #{userId}
 	</select>
-	
-	<update id="updateMember" parameterType="memberDto">
+
+	<update id="saveRefreshToken" parameterType="map">
 		update members
-		<trim prefix="set" suffixOverrides=",">
-			<if test="userPwd != null">user_password = #{userPwd},</if>
-			<if test="emailId != null">email_id = #{emailId},</if>
-			<if test="emailDomain != null">email_domain = #{emailDomain},</if>
-		</trim>
+		set token = #{token}
 		where user_id = #{userId}
 	</update>
-	
-	<delete id="deleteMember" parameterType="String">
-		delete from members
+
+	<select id="getRefreshToken" parameterType="string" resultType="string">
+		select token
+		from members
 		where user_id = #{userId}
-	</delete> -->
-	
+	</select>
+
+	<update id="deleteRefreshToken" parameterType="map">
+		update members
+		set token = #{token, jdbcType=VARCHAR}
+		where user_id = #{userId}
+	</update>
+
 </mapper>
