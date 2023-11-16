@@ -99,7 +99,7 @@
 	
 	<update id="modifyArticle" parameterType="boardDto">
 		update board
-		set subject = #{subject}, content = #{content}
+		set subject = #{subject}, content = #{content}, is_public = #{isPublic}, attraction_list = #{attractionList}, category = #{category}
 		where article_no = #{articleNo}
 	</update>
 	

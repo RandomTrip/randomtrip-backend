@@ -105,8 +105,8 @@ http://localhost/vue/board
 		}
 	}
 
-	@ApiOperation(value = "공유 가능 설정", notes = "http://localhost/vue/board/public?articleno=3&ispublic=1  : 3번 게시물을 공유 가능(1)으로 수정", response = BoardDto.class)
-	@GetMapping("public")
+	// @ApiOperation(value = "공유 가능 설정", notes = "http://localhost/vue/board/public?articleno=3&ispublic=1  : 3번 게시물을 공유 가능(1)으로 수정", response = BoardDto.class)
+	// @PutMapping("public")
 	public BoardDto setPublic(
 			@RequestParam @ApiParam(value = "공유가능 유무를 설정하기 위한 매개변수 (articleno: 3, ispublic: 0, 1)", required = true) Map<String, String> map)
 			throws Exception {
@@ -142,8 +142,8 @@ http://localhost/vue/board
 		return map;
 	}
 
-	//@ApiOperation(value = "수정 할 글 얻기", notes = "글번호에 해당하는 게시글의 정보를 반환한다.", response = BoardDto.class)
-	//@GetMapping("/modify/{articleno}")
+	// @ApiOperation(value = "수정 할 글 얻기", notes = "글번호에 해당하는 게시글의 정보를 반환한다.", response = BoardDto.class)
+	// @PutMapping("/{articleno}")
 	public ResponseEntity<BoardDto> getModifyArticle(
 			@PathVariable("articleno") @ApiParam(value = "얻어올 글의 글번호.", required = true) int articleno)
 			throws Exception {
@@ -151,8 +151,37 @@ http://localhost/vue/board
 		return new ResponseEntity<BoardDto>(boardService.getArticle(articleno), HttpStatus.OK);
 	}
 
-	//@ApiOperation(value = "게시판 글수정", notes = "수정할 게시글 정보를 입력한다. 그리고 DB수정 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
-	//@PutMapping
+
+
+	/*
+put
+http://localhost/vue/board
+{
+	"articleNo": 32,
+    "subject": "수정된 글 제목",
+    "content": "수정된 글 내용",
+    "attractionList": "125465,125478",
+    "isPublic": 1,
+    "category": 1
+}
+	*/
+
+	@ApiOperation(value = "여행계획 수정", notes = "수정할 게시글 정보(articleNo, subject, content, attractionList, isPublic, category) " +
+			"예시)" +
+			"" +
+			"put\n" +
+			"http://localhost/vue/board\n" +
+			"{\n" +
+			"\t\"articleNo\": 32,\n" +
+			"    \"subject\": \"수정된 글 제목\",\n" +
+			"    \"content\": \"수정된 글 내용\",\n" +
+			"    \"attractionList\": \"125465,125478\",\n" +
+			"    \"isPublic\": 1,\n" +
+			"    \"category\": 1\n" +
+			"}" +
+			"" +
+			"를 입력한다. 그리고 DB수정 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
+	@PutMapping
 	public ResponseEntity<String> modifyArticle(
 			@RequestBody @ApiParam(value = "수정할 글정보.", required = true) BoardDto boardDto) throws Exception {
 		logger.info("modifyArticle - 호출 {}", boardDto);
