@@ -18,6 +18,16 @@ public class AttractionInfoDto {
 	private double longitude;
 	private String mlevel;
 
+	private String type;
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
 	public AttractionInfoDto() {}
 	
 	public AttractionInfoDto(int contentId, int contentTypeId, String title, String addr1, String addr2, String zipcode,
@@ -38,6 +48,37 @@ public class AttractionInfoDto {
 		this.latitude = latitude;
 		this.longitude = longitude;
 		this.mlevel = mlevel;
+
+
+		switch(this.contentTypeId) {
+			case 12:
+				this.type = "관광지";
+				break;
+			case 14:
+				this.type = "문화시설";
+				break;
+			case 15:
+				this.type = "축제공연행사";
+				break;
+			case 25:
+				this.type = "여행코스";
+				break;
+			case 28:
+				this.type = "레저&스포츠";
+				break;
+			case 32:
+				this.type = "숙박";
+				break;
+			case 38:
+				this.type = "쇼핑";
+				break;
+			case 39:
+				this.type = "음식점";
+				break;
+		}
+
+
+
 	}
 
 	public int getContentId() {
