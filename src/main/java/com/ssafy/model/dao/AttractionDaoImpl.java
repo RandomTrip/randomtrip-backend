@@ -114,8 +114,8 @@ public class AttractionDaoImpl implements AttractionDao {
 				int readcount = rs.getInt(10);
 				int sidoCode = rs.getInt(11);
 				int gugunCode = rs.getInt(12);
-				double latitude = rs.getInt(13);
-				double longitude = rs.getInt(14);
+				double latitude = rs.getDouble(13);
+				double longitude = rs.getDouble(14);
 				String mlevel = rs.getString(15);
 				
 				list.add(new AttractionInfoDto(contentId, contentTypeId, title, addr1, addr2, zipcode,
@@ -178,8 +178,8 @@ public class AttractionDaoImpl implements AttractionDao {
 				int readcount = rs.getInt(10);
 				int sidoCode = rs.getInt(11);
 				int gugunCode = rs.getInt(12);
-				double latitude = rs.getInt(13);
-				double longitude = rs.getInt(14);
+				double latitude = rs.getDouble(13);
+				double longitude = rs.getDouble(14);
 				String mlevel = rs.getString(15);
 
 				list.add(new AttractionInfoDto(contentId, contentTypeId, title, addr1, addr2, zipcode,
@@ -241,8 +241,8 @@ public class AttractionDaoImpl implements AttractionDao {
 				int readcount = rs.getInt(10);
 				int sidoCode = rs.getInt(11);
 				int gugunCode = rs.getInt(12);
-				double latitude = rs.getInt(13);
-				double longitude = rs.getInt(14);
+				double latitude = rs.getDouble(13);
+				double longitude = rs.getDouble(14);
 				String mlevel = rs.getString(15);
 
 				list.add(new AttractionInfoDto(contentId, contentTypeId, title, addr1, addr2, zipcode,
