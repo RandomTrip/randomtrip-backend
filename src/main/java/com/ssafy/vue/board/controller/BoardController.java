@@ -85,6 +85,55 @@ public class BoardController {
 		}
 	}
 
+
+
+
+
+	@ApiOperation(value = "댓글 작성", notes = "")
+	@PostMapping("/comments")
+	public ResponseEntity<?> writeComment(
+			@RequestBody @ApiParam(value = "게시글 정보.", required = true) CommentDto commentDto) {
+		try {
+			System.out.println(commentDto);
+
+			boardService.writeComment(commentDto);
+			boardService.increaseCommentCount(commentDto.getArticleNo());
+
+			return new ResponseEntity<Void>(HttpStatus.CREATED);
+		} catch (Exception e) {
+			return exceptionHandling(e);
+		}
+	}
+
+	@ApiOperation(value = "댓글 삭제", notes = "" +
+			"예시" +
+			"post" +
+			"http://localhost/vue/board/comments" +
+			"{\n" +
+			"    \"commentNo\": 1,\n" +
+			"    \"articleNo\": 32\n" +
+			"}" +
+			"32번 게시물의 1번 댓글 삭제." +
+			"")
+	@DeleteMapping("/comments")
+	public ResponseEntity<?> deleteComment(
+			@RequestBody @ApiParam(value = "게시글 정보.", required = true) CommentDto commentDto) {
+		try {
+			System.out.println(commentDto);
+
+			boardService.deleteComment(commentDto);
+			boardService.decreaseCommentCount(commentDto.getArticleNo());
+
+			return new ResponseEntity<Void>(HttpStatus.CREATED);
+		} catch (Exception e) {
+			return exceptionHandling(e);
+		}
+	}
+
+
+
+
+
 	// http://localhost/vue/board?pgno=2&&spp20
 	// http://localhost/vue/board?pgno=1&&spp20
 	@ApiOperation(value = "여행정보 목록 (나의 여행 계획, 공유된 여행 계획)", notes = "http://localhost/vue/board?pgno=1&&spp=20&&key=user_id&&word=admin: user_id가 'admin'인 유저의 '나의 여행 계획' 20개씩 페이징해서 1페이지 데이터를 리턴.  pgno=1&&spp20: 20개씩 1페이지. 모든 유저의 여행 계획 공유 리스트 (is_public 이 1 인 게시물만을 읽어옴.)", response = List.class)

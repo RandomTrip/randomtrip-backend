@@ -10,6 +10,11 @@ import com.ssafy.vue.board.model.CommentDto;
 public interface BoardService {
 
 	void writeArticle(BoardDto boardDto) throws Exception;
+	void writeComment(CommentDto commentDto) throws Exception;
+	void deleteComment(CommentDto commentDto) throws Exception;
+	void increaseCommentCount(int num) throws Exception;
+	void decreaseCommentCount(int num) throws Exception;
+
 	BoardListDto listArticle(Map<String, String> map) throws Exception;
 	List<CommentDto> listComment(BoardDto dto) throws Exception;
 //	PageNavigation makePageNavigation(Map<String, String> map) throws Exception;

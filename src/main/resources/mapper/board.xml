@@ -45,7 +45,19 @@
 			select last_insert_id()
 		</selectKey>
 	</insert>
-	
+
+
+	<insert id="writeComment" parameterType="commentDto">
+		INSERT INTO Comments (article_no, user_id, content)
+		VALUES (#{articleNo}, #{userId}, #{content})
+	</insert>
+
+	<delete id="deleteComment" parameterType="commentDto">
+		DELETE FROM COMMENTS WHERE comment_no = #{commentNo}
+	</delete>
+
+
+
 	<insert id="registerFile" parameterType="boardDto">
 		insert into file_info (article_no, save_folder, original_file, save_file)
 		values
@@ -77,7 +89,7 @@
 
 
 	<select id="listComment" parameterType="boardDto" resultMap="comment">
-		select c.comment_no, m.user_name, c.content, c.register_time
+		select c.article_no, c.comment_no, m.user_name, c.content, c.register_time, m.user_id
 		from comments c, members m
 		where c.article_no = #{articleNo} and c.user_id = m.user_id
 		order by c.comment_no
@@ -89,7 +101,20 @@
 		SET is_public = #{ispublic}
 		WHERE article_no = #{articleno}
 	</update>
-	
+
+	<update id="increaseCommentCount" parameterType="map">
+		UPDATE board
+		SET comments_count = comments_count + 1
+		WHERE article_no = #{articleNo}
+	</update>
+
+	<update id="decreaseCommentCount" parameterType="map">
+		UPDATE board
+		SET comments_count = comments_count - 1
+		WHERE article_no = #{articleNo}
+	</update>
+
+
 	<select id="getTotalArticleCount" parameterType="map" resultType="int">
 		select count(article_no)
 		from board
