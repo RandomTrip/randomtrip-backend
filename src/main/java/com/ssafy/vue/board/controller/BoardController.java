@@ -89,7 +89,17 @@ public class BoardController {
 
 
 
-	@ApiOperation(value = "댓글 작성", notes = "")
+	@ApiOperation(value = "댓글 작성", notes = "" +
+			"" +
+			"예시)" +
+			"" +
+			"post" +
+			"http://localhost/vue/board/comments" +
+			"{\n" +
+			"    \"userId\": \"ssafy\",\n" +
+			"    \"articleNo\": \"32\",\n" +
+			"    \"content\": \"추가된 댓글입니다 ㅋ !!!!!\"\n" +
+			"}")
 	@PostMapping("/comments")
 	public ResponseEntity<?> writeComment(
 			@RequestBody @ApiParam(value = "게시글 정보.", required = true) CommentDto commentDto) {
@@ -239,7 +249,29 @@ http://localhost/vue/board
 		boardService.modifyArticle(boardDto);
 		return ResponseEntity.ok().build();
 	}
-	
+
+
+	@ApiOperation(value = "댓글 수정", notes = "댓글 수정" +
+			"" +
+			"예시)" +
+			"" +
+			"post" +
+			"http://localhost/vue/board/comments" +
+			"" +
+			"{\n" +
+			"    \"commentNo\": \"13\",\n" +
+			"    \"content\": \"수정된 댓글입니다.\"\n" +
+			"}")
+	@PutMapping("/comments")
+	public ResponseEntity<String> modifyComment (
+			@RequestBody @ApiParam(value = "수정할 댓글정보.", required = true) CommentDto commentDto) throws Exception {
+		logger.info("modifyComment - 호출 {}", commentDto);
+
+		boardService.modifyComment(commentDto);
+		return ResponseEntity.ok().build();
+	}
+
+
 	@ApiOperation(value = "여행계획 글삭제", notes = "글번호(article_no)에 해당하는 게시글의 정보를 삭제한다. 그리고 DB삭제 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
 	@DeleteMapping("/{articleno}")
 	public ResponseEntity<String> deleteArticle(@PathVariable("articleno") @ApiParam(value = "삭제할 글의 글번호.", required = true) int articleno) throws Exception {

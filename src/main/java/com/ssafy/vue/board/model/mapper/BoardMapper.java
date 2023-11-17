@@ -15,6 +15,7 @@ public interface BoardMapper {
 
 	void writeArticle(BoardDto boardDto) throws SQLException;
 	void writeComment(CommentDto commentDto) throws SQLException;
+	void modifyComment(CommentDto commentDto) throws SQLException;
 	void deleteComment(CommentDto commentDto) throws SQLException;
 	void increaseCommentCount(int num) throws SQLException;
 	void decreaseCommentCount(int num) throws SQLException;
