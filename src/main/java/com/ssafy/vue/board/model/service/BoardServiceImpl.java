@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import com.ssafy.vue.board.model.CommentDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -84,6 +85,11 @@ public class BoardServiceImpl implements BoardService {
 		boardListDto.setTotalPageCount(totalPageCount);
 
 		return boardListDto;
+	}
+
+	@Override
+	public List<CommentDto> listComment(BoardDto dto) throws Exception {
+		return boardMapper.listComment(dto);
 	}
 
 //	@Override

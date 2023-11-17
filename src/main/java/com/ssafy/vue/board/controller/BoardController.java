@@ -7,6 +7,7 @@ import java.util.Map;
 
 import com.ssafy.model.AttractionInfoDto;
 import com.ssafy.model.service.AttractionServiceImpl;
+import com.ssafy.vue.board.model.CommentDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
@@ -122,7 +123,7 @@ public class BoardController {
 
 
 
-	@ApiOperation(value = "여행 계획 상세보기", notes = "글번호에 해당하는 게시글의 정보를 반환한다. attraction list의 정보도 여기서 전부 받아옵니다.", response = BoardDto.class)
+	@ApiOperation(value = "여행 계획 상세보기 + 댓글", notes = "글번호에 해당하는 게시글과 댓글의 정보를 반환한다. attraction list의 정보도 여기서 전부 받아옵니다.", response = BoardDto.class)
 	@GetMapping("/{articleno}")
 	public Map<String, Object> getArticle(
 			@PathVariable("articleno") @ApiParam(value = "얻어올 글의 글번호.", required = true) int articleno)
@@ -132,10 +133,12 @@ public class BoardController {
 
 		BoardDto dto = boardService.getArticle(articleno);
 		List<AttractionInfoDto> list = new MainController().getbyContentIdList(dto.getAttractionList());
-
+		List<CommentDto> commentList = boardService.listComment(dto);
 		Map<String, Object> map = new HashMap<>();
 		map.put("board", dto);
 		map.put("attractionInfo", list);
+		map.put("comment", commentList);
+
 
 		return map;
 	}
