@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
+import com.ssafy.vue.board.model.CommentDto;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.ssafy.vue.board.model.BoardDto;
@@ -18,6 +19,7 @@ public interface BoardMapper {
 
 	List<BoardDto> listArticle(Map<String, Object> param) throws SQLException;
 
+	List<CommentDto> listComment(BoardDto boardDto) throws SQLException;
 
 	void setPublic(Map<String, Integer> map) throws Exception;
 

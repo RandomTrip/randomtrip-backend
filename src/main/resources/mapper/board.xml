@@ -16,6 +16,15 @@
 		<result column="is_public" property="isPublic"/>
 		<result column="category" property="category"/>
 	</resultMap>
+
+	<resultMap type="commentDto" id="comment">
+		<result column="comment_no" property="commentNo"/>
+		<result column="article_no" property="articleNo"/>
+		<result column="user_id" property="userId"/>
+		<result column="user_name" property="userName"/>
+		<result column="content" property="content"/>
+		<result column="register_time" property="registerTime"/>
+	</resultMap>
 	
 <!--	<resultMap type="boardDto" id="viewArticle" extends="article">-->
 <!--		<collection property="fileInfos" column="article_no" javaType="list" ofType="fileInfoDto" select="fileInfoList"/>-->
@@ -63,6 +72,15 @@
 		order by b.article_no desc
 		limit #{start}, #{listsize}
 	</select>
+
+
+	<select id="listComment" parameterType="boardDto" resultMap="comment">
+		select c.comment_no, m.user_name, c.content, c.register_time
+		from comments c, members m
+		where c.article_no = #{articleNo} and c.user_id = m.user_id
+		order by c.comment_no
+	</select>
+
 
 	<update id="setPublic" parameterType="map">
 		UPDATE board
