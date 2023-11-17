@@ -104,4 +104,11 @@ VALUES
 
 
 
+-- 좋아요 수와 댓글 수를 저장하는 컬럼을 추가
+
+ALTER TABLE board
+ADD COLUMN comments_count INT DEFAULT 0,
+ADD COLUMN like_count INT DEFAULT 0;
+
+
 
