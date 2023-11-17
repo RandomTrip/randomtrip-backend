@@ -30,10 +30,23 @@ public class MemberServiceImpl implements MemberService {
 		System.out.println("이미 존재하는 유저인가요? : " + dto);
 		if(dto == null) {
 			memberMapper.signUp(memberDto);
-
 			return 1;
 		}else {
 			return 0;
+		}
+	}
+
+	@Override
+	public int updateUser(MemberDto memberDto) throws Exception {
+
+		MemberDto dto = memberMapper.userInfo(memberDto.getUserId());
+
+		System.out.println("이미 존재하는 유저인가요? : " + dto);
+		if(dto == null) {
+			return 0;
+		}else {
+			memberMapper.updateUser(memberDto);
+			return 1;
 		}
 	}
 

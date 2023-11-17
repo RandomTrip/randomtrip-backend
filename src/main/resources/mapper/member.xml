@@ -25,6 +25,15 @@
 		VALUES (#{userId}, #{userName}, #{userPwd}, #{emailId}, #{emailDomain})
 	</insert>
 
+
+	<update id="updateUser" parameterType="map">
+		UPDATE members
+		SET user_name = #{userName},
+		email_id = #{emailId},
+		email_domain = #{emailDomain}
+		WHERE user_id = #{userId}
+	</update>
+
 	<select id="userInfo" parameterType="string" resultMap="member">
 		select user_name, user_id, email_id, email_domain, join_date
 		from members
