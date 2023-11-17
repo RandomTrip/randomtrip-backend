@@ -96,6 +96,46 @@ public class MemberController {
 	}
 
 
+	@ApiOperation(value = "유저 정보 수정", notes = "userId 유저의 유저 이름(userName), 유저 이메일(emailId), 이메일 도메인(emailDomain) 를 수정합니다." +
+			"예시)" +
+			"post" +
+			"http://localhost/vue/user" +
+			"{\n" +
+			"    \"userId\": \"ssafy\",\n" +
+			"    \"userName\": \"new name\",\n" +
+			"    \"emailId\": \"new id\",\n" +
+			"    \"emailDomain\": \"new domain.com\"\n" +
+			"}")
+	@PutMapping
+	public ResponseEntity<Map<String, Object>> updateUser(
+			@RequestBody @ApiParam(value = "userId, userName, emailId, emailDomain", required = true) MemberDto memberDto) {
+		log.debug("login user : {}", memberDto);
+
+		try {
+			int result = memberService.updateUser(memberDto);
+
+			if(result == 1) {
+				HttpStatus status = HttpStatus.ACCEPTED;
+				Map<String, Object> resultMap = new HashMap<String, Object>();
+				resultMap.put("result", "수정 성공");
+				return new ResponseEntity<Map<String, Object>>(resultMap, status);
+			}else {
+
+				HttpStatus status = HttpStatus.BAD_REQUEST;
+				Map<String, Object> resultMap = new HashMap<String, Object>();
+				resultMap.put("result", "존재하지 않는 유저입니다.");
+				return new ResponseEntity<Map<String, Object>>(resultMap, status);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+			HttpStatus status = HttpStatus.BAD_REQUEST;
+			Map<String, Object> resultMap = new HashMap<String, Object>();
+			resultMap.put("result", "서버 에러가 발생한듯");
+			return new ResponseEntity<Map<String, Object>>(resultMap, status);
+		}
+	}
+
+
 	/*
 get
 http://localhost/vue/user/info/{user_id}
