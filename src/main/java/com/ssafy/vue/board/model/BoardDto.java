@@ -38,6 +38,28 @@ public class BoardDto {
 	private int category;
 
 
+	@ApiModelProperty(value = "댓글 수")
+	private int commentsCount;
+
+	@ApiModelProperty(value = "좋아요 수")
+	private int likeCount;
+
+	public int getCommentsCount() {
+		return commentsCount;
+	}
+
+	public void setCommentsCount(int commentsCount) {
+		this.commentsCount = commentsCount;
+	}
+
+	public int getLikeCount() {
+		return likeCount;
+	}
+
+	public void setLikeCount(int likeCount) {
+		this.likeCount = likeCount;
+	}
+
 	public int getArticleNo() {
 		return articleNo;
 	}
