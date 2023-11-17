@@ -141,11 +141,17 @@
 		set hit = hit + 1
 		where article_no = #{articleNo}
 	</update>
-	
+
 	<update id="modifyArticle" parameterType="boardDto">
 		update board
 		set subject = #{subject}, content = #{content}, is_public = #{isPublic}, attraction_list = #{attractionList}, category = #{category}
 		where article_no = #{articleNo}
+	</update>
+
+	<update id="modifyComment" parameterType="commentDto">
+		update comments
+		set content = #{content}
+		where comment_no = #{commentNo}
 	</update>
 	
 	<delete id="deleteFile" parameterType="int">

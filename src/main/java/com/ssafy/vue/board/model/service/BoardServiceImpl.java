@@ -42,6 +42,12 @@ public class BoardServiceImpl implements BoardService {
 	public void writeComment(CommentDto commentDto) throws Exception {
 		boardMapper.writeComment(commentDto);
 	}
+
+	@Override
+	@Transactional
+	public void modifyComment(CommentDto commentDto) throws Exception {
+		boardMapper.modifyComment(commentDto);
+	}
 	@Override
 	@Transactional
 	public void deleteComment(CommentDto commentDto) throws Exception {
