@@ -10,7 +10,7 @@ import java.util.Map;
 public interface MemberMapper {
 
 	MemberDto login(MemberDto memberDto) throws SQLException;
-	MemberDto signUp(MemberDto memberDto) throws SQLException;
+	void signUp(MemberDto memberDto) throws SQLException;
 	MemberDto userInfo(String userId) throws SQLException;
 	void saveRefreshToken(Map<String, String> map) throws SQLException;
 	Object getRefreshToken(String userid) throws SQLException;

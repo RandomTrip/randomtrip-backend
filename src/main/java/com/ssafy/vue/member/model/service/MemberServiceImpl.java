@@ -25,12 +25,10 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public int signUp(MemberDto memberDto) throws Exception {
 
-		MemberDto dto = memberMapper.login(memberDto);
+		MemberDto dto = memberMapper.userInfo(memberDto.getUserId());
 
-		System.out.println("값 : " + dto);
+		System.out.println("이미 존재하는 유저인가요? : " + dto);
 		if(dto == null) {
-
-			System.out.print("회원가입 데이터 메퍼 등록: " + memberDto);
 			memberMapper.signUp(memberDto);
 
 			return 1;

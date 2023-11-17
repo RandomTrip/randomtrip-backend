@@ -77,21 +77,20 @@ public class MemberController {
 			int result = memberService.signUp(memberDto);
 
 			if(result == 1) {
-
-
-				Map<String, Object> resultMap = new HashMap<String, Object>();
-				HttpStatus status = HttpStatus.ACCEPTED;
-
+				System.out.println("회원가입 시도 !!");
 				return login(memberDto);
 			}else {
 
 				HttpStatus status = HttpStatus.BAD_REQUEST;
 				Map<String, Object> resultMap = new HashMap<String, Object>();
+				resultMap.put("result", "이미 존재하는 유저입니다.");
 				return new ResponseEntity<Map<String, Object>>(resultMap, status);
 			}
 		}catch(Exception e) {
+			e.printStackTrace();
 			HttpStatus status = HttpStatus.BAD_REQUEST;
 			Map<String, Object> resultMap = new HashMap<String, Object>();
+			resultMap.put("result", "서버 에러가 발생한듯");
 			return new ResponseEntity<Map<String, Object>>(resultMap, status);
 		}
 	}
