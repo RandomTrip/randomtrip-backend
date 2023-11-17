@@ -20,6 +20,11 @@
 		where user_id = #{userId} and user_password = #{userPwd}
 	</select>
 
+	<insert id="signUp" parameterType="map">
+		INSERT INTO members (user_id, user_name, user_password, email_id, email_domain)
+		VALUES (#{userId}, #{userName}, #{userPwd}, #{emailId}, #{emailDomain})
+	</insert>
+
 	<select id="userInfo" parameterType="string" resultMap="member">
 		select user_name, user_id, email_id, email_domain, join_date
 		from members

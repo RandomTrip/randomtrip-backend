@@ -65,6 +65,38 @@ public class MemberController {
 	}
 
 
+
+
+	@ApiOperation(value = "회원가입", notes = "회원가입 처리.")
+	@PostMapping
+	public ResponseEntity<Map<String, Object>> signUp(
+			@RequestBody @ApiParam(value = "user_id, user_name, user_password, email_id, email_domain", required = true) MemberDto memberDto) {
+		log.debug("login user : {}", memberDto);
+
+		try {
+			int result = memberService.signUp(memberDto);
+
+			if(result == 1) {
+
+
+				Map<String, Object> resultMap = new HashMap<String, Object>();
+				HttpStatus status = HttpStatus.ACCEPTED;
+
+				return login(memberDto);
+			}else {
+
+				HttpStatus status = HttpStatus.BAD_REQUEST;
+				Map<String, Object> resultMap = new HashMap<String, Object>();
+				return new ResponseEntity<Map<String, Object>>(resultMap, status);
+			}
+		}catch(Exception e) {
+			HttpStatus status = HttpStatus.BAD_REQUEST;
+			Map<String, Object> resultMap = new HashMap<String, Object>();
+			return new ResponseEntity<Map<String, Object>>(resultMap, status);
+		}
+	}
+
+
 	/*
 get
 http://localhost/vue/user/info/{user_id}
