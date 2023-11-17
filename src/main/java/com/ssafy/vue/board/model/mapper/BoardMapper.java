@@ -14,12 +14,17 @@ import com.ssafy.vue.board.model.FileInfoDto;
 public interface BoardMapper {
 
 	void writeArticle(BoardDto boardDto) throws SQLException;
+	void writeComment(CommentDto commentDto) throws SQLException;
+	void deleteComment(CommentDto commentDto) throws SQLException;
+	void increaseCommentCount(int num) throws SQLException;
+	void decreaseCommentCount(int num) throws SQLException;
+
 
 	void registerFile(BoardDto boardDto) throws Exception;
 
 	List<BoardDto> listArticle(Map<String, Object> param) throws SQLException;
 
-	List<CommentDto> listComment(BoardDto boardDto) throws SQLException;
+	List<CommentDto> listComment(BoardDto commentDto) throws SQLException;
 
 	void setPublic(Map<String, Integer> map) throws Exception;
 

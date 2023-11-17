@@ -33,19 +33,32 @@ public class BoardServiceImpl implements BoardService {
 	public void writeArticle(BoardDto boardDto) throws Exception {
 		boardDto.setAttractionList(boardDto.getListAttraction().stream().collect(Collectors.joining(",")));
 		// 서버 저장용 String 데이터 설정
-
 		System.out.println(boardDto.getAttractionList());
-
 		boardMapper.writeArticle(boardDto);
-
-
-
-//		List<FileInfoDto> fileInfos = boardDto.getFileInfos();
-//		if (fileInfos != null && !fileInfos.isEmpty()) {
-//			boardMapper.registerFile(boardDto);
-//		}
 	}
 
+	@Override
+	@Transactional
+	public void writeComment(CommentDto commentDto) throws Exception {
+		boardMapper.writeComment(commentDto);
+	}
+	@Override
+	@Transactional
+	public void deleteComment(CommentDto commentDto) throws Exception {
+		boardMapper.deleteComment(commentDto);
+	}
+
+	@Override
+	@Transactional
+	public void increaseCommentCount(int num) throws Exception {
+		boardMapper.increaseCommentCount(num);
+	}
+
+	@Override
+	@Transactional
+	public void decreaseCommentCount(int num) throws Exception {
+		boardMapper.decreaseCommentCount(num);
+	}
 	@Override
 	public BoardListDto listArticle(Map<String, String> map) throws Exception {
 		Map<String, Object> param = new HashMap<String, Object>();
