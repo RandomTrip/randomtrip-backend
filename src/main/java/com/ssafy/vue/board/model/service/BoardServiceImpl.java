@@ -153,6 +153,8 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public void modifyArticle(BoardDto boardDto) throws Exception {
 		// TODO : BoardDaoImpl의 modifyArticle 호출
+
+		boardDto.setAttractionList(boardDto.getListAttraction().stream().collect(Collectors.joining(",")));
 		boardMapper.modifyArticle(boardDto);
 	}
 
