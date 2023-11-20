@@ -226,7 +226,7 @@ http://localhost/vue/board
 }
 	*/
 
-	@ApiOperation(value = "여행계획 수정", notes = "수정할 게시글 정보(articleNo, subject, content, attractionList, isPublic, category) " +
+	@ApiOperation(value = "여행계획 수정", notes = "수정할 게시글 정보(articleNo, subject, content, listAttraction, isPublic, category) " +
 			"예시)" +
 			"" +
 			"put\n" +
@@ -235,7 +235,7 @@ http://localhost/vue/board
 			"\t\"articleNo\": 32,\n" +
 			"    \"subject\": \"수정된 글 제목\",\n" +
 			"    \"content\": \"수정된 글 내용\",\n" +
-			"    \"attractionList\": \"125465,125478\",\n" +
+			"    \"listAttraction\": [\"125411\", \"125418\", \"125431\"],\n" +
 			"    \"isPublic\": 1,\n" +
 			"    \"category\": 1\n" +
 			"}" +
