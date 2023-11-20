@@ -86,6 +86,13 @@
 		order by b.article_no desc
 		limit #{start}, #{listsize}
 	</select>
+	<select id="getTotalArticleCount" parameterType="map" resultType="int">
+		select count(article_no)
+		from board b, members m
+		where b.user_id = m.user_id
+		<include refid="search"></include>
+		${isPublic}
+	</select>
 
 
 	<select id="listComment" parameterType="boardDto" resultMap="comment">
@@ -115,14 +122,7 @@
 	</update>
 
 
-	<select id="getTotalArticleCount" parameterType="map" resultType="int">
-		select count(article_no)
-		from board
-		<where>
-			<include refid="search"></include>
-		</where>
-	</select>
-	
+
 	<select id="getArticle" parameterType="int" resultMap="article">
 		select b.article_no, b.user_id, b.subject, b.content, b.hit, b.register_time, m.user_name, b.is_public, b.category, b.attraction_list, b.comments_count, b.like_count
 		from board b, members m
