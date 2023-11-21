@@ -52,11 +52,6 @@ public class MainController {
 	}
 
 
-	@GetMapping("/send")
-	public Object sendData() throws IOException {
-
-		return attractionAiService.sendRequest();
-	}
 
 	@GetMapping("/sidolist")
 	@ApiOperation(value = "전국 시도 리스트 반환", notes = "특정 시도의 리스트를 반환합니다.")

@@ -274,4 +274,63 @@ public class AttractionDaoImpl implements AttractionDao {
 
 		return attractionList;
 	}
+
+	@Override
+	public List<AttractionInfoDto> getNearbyAttractions(double latitude_p, double longitude_p, int contentTypeId_p, int count) {
+
+
+
+
+		List<AttractionInfoDto> list = new ArrayList<>();
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			conn = DBUtil.getInstance().getConnection();
+//SELECT * FROM enjoytrip.attraction_info where content_type_id = 12 and sido_code = 32 order by (abs(latitude - 37.522513) + abs(longitude - 128.291911)) limit 4;
+			StringBuilder sql = new StringBuilder("select * \n");
+			sql.append("from attraction_info\n");
+			sql.append("where content_type_id = " + contentTypeId_p);
+			sql.append(" order by (abs(latitude - " + latitude_p + ") + abs(longitude - " + longitude_p + ")) limit " + String.valueOf(count));
+
+
+			pstmt = conn.prepareStatement(sql.toString());
+
+
+
+			rs = pstmt.executeQuery();
+
+			while(rs.next()) {
+				int contentId = rs.getInt(1);
+				int contentTypeId = rs.getInt(2);
+				String title = rs.getString(3);
+				String addr1 = rs.getString(4);
+				String addr2 = rs.getString(5);
+				String zipcode = rs.getString(6);
+				String tel = rs.getString(7);
+				String firstImage = rs.getString(8);
+				String firstImage2 = rs.getString(9);
+				int readcount = rs.getInt(10);
+				int sidoCode = rs.getInt(11);
+				int gugunCode = rs.getInt(12);
+				double latitude = rs.getDouble(13);
+				double longitude = rs.getDouble(14);
+				String mlevel = rs.getString(15);
+
+				list.add(new AttractionInfoDto(contentId, contentTypeId, title, addr1, addr2, zipcode,
+						tel, firstImage,firstImage2, readcount, sidoCode, gugunCode, latitude, longitude, mlevel));
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBUtil.getInstance().close(pstmt, conn);
+		}
+
+
+		System.out.println(list);
+		return list;
+	}
 }

@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import com.ssafy.model.AttractionInfoDto;
+import com.ssafy.model.service.AttractionAiService;
 import com.ssafy.vue.board.model.CommentDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,6 +23,8 @@ import com.ssafy.vue.board.model.mapper.BoardMapper;
 public class BoardServiceImpl implements BoardService {
 
 	private BoardMapper boardMapper;
+	@Autowired
+	private AttractionAiService attractionAiService;
 
 	@Autowired
 	public BoardServiceImpl(BoardMapper boardMapper) {
@@ -180,6 +184,11 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public void setPublic(Map<String, Integer> map) throws Exception{
 		boardMapper.setPublic(map);
+	}
+
+	@Override
+	public Object getAiRecommendation(List<AttractionInfoDto> list) {
+		return attractionAiService.getAiRecommendation(list);
 	}
 
 
