@@ -24,7 +24,8 @@ import java.util.List;
 public class MainController {
 
 
-	AttractionAiService attractionAiService = new AttractionAiService();
+	@Autowired
+	AttractionAiService attractionAiService;
 	private AttractionService as = AttractionServiceImpl.getAttractionService();
 	// @GetMapping
 	// @ApiOperation(value = "모든 명소 리스트 반환", notes = "모든 명소의 리스트를 반환합니다.")
