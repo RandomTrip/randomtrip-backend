@@ -3,15 +3,18 @@ package com.ssafy.vue.board.controller;
 import com.ssafy.model.AttractionDetailDto;
 import com.ssafy.model.AttractionInfoDto;
 import com.ssafy.model.SidoDto;
+import com.ssafy.model.service.AttractionAiService;
 import com.ssafy.model.service.AttractionService;
 import com.ssafy.model.service.AttractionServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -19,6 +22,9 @@ import java.util.List;
 @RequiredArgsConstructor
 @Api(tags = "Attraction", description = "Attraction 관련 API")
 public class MainController {
+
+
+	AttractionAiService attractionAiService = new AttractionAiService();
 	private AttractionService as = AttractionServiceImpl.getAttractionService();
 	// @GetMapping
 	// @ApiOperation(value = "모든 명소 리스트 반환", notes = "모든 명소의 리스트를 반환합니다.")
@@ -44,6 +50,12 @@ public class MainController {
 		return as.searchByTitle(title, 0);
 	}
 
+
+	@GetMapping("/send")
+	public Object sendData() throws IOException {
+
+		return attractionAiService.sendRequest();
+	}
 
 	@GetMapping("/sidolist")
 	@ApiOperation(value = "전국 시도 리스트 반환", notes = "특정 시도의 리스트를 반환합니다.")

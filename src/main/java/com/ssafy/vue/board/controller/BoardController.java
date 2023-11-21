@@ -1,15 +1,18 @@
 package com.ssafy.vue.board.controller;
 
+import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import com.ssafy.model.AttractionInfoDto;
+import com.ssafy.model.service.AttractionAiService;
 import com.ssafy.model.service.AttractionServiceImpl;
 import com.ssafy.vue.board.model.CommentDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -42,6 +45,8 @@ import io.swagger.annotations.ApiResponses;
 @RequestMapping("/board")
 @Api("게시판 컨트롤러  API V1")
 public class BoardController {
+
+
 
 	private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
 //	private static final String SUCCESS = "success";
@@ -84,6 +89,7 @@ public class BoardController {
 			return exceptionHandling(e);
 		}
 	}
+
 
 
 
