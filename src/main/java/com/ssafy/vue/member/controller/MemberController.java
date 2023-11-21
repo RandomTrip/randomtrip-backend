@@ -47,8 +47,8 @@ public class MemberController {
 				memberService.saveRefreshToken(loginUser.getUserId(), refreshToken);
 
 //				JSON으로 token 전달.
-				resultMap.put("access-token", accessToken);
-				resultMap.put("refresh-token", refreshToken);
+				resultMap.put("accessToken", accessToken);
+				resultMap.put("refreshToken", refreshToken);
 
 				status = HttpStatus.CREATED;
 			} else {
