@@ -2,9 +2,11 @@ package com.ssafy.vue.board.controller;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import com.ssafy.model.AttractionInfoDto;
 import com.ssafy.model.service.AttractionAiService;
@@ -207,6 +209,24 @@ public class BoardController {
 
 		return map;
 	}
+
+
+	@ApiOperation(value = "AI의 추천을 받습니다.", notes = "여행지 리스트를 받고, 동선에서 가까운 여행지중 여행 테마에 맞는 여행지들을 ai기반으로 추천 받는다.", response = BoardDto.class)
+	@PostMapping("/ai")
+	public Object getAIRecommendation(
+			@ApiParam(value = "여행지의 리스트", required = true) @RequestBody Map<String, List<String>> requestBody)
+			throws Exception {
+
+		List<String> attractions = requestBody.get("attractions");
+		String strList = attractions.stream().collect(Collectors.joining(","));
+
+		List<AttractionInfoDto> list = new MainController().getbyContentIdList(strList);
+
+
+
+		return boardService.getAiRecommendation(list);
+	}
+
 
 	// @ApiOperation(value = "수정 할 글 얻기", notes = "글번호에 해당하는 게시글의 정보를 반환한다.", response = BoardDto.class)
 	// @PutMapping("/{articleno}")
