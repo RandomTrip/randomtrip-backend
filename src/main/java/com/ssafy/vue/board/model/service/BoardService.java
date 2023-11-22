@@ -4,9 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.ssafy.model.AttractionInfoDto;
-import com.ssafy.vue.board.model.BoardDto;
-import com.ssafy.vue.board.model.BoardListDto;
-import com.ssafy.vue.board.model.CommentDto;
+import com.ssafy.vue.board.model.*;
 
 public interface BoardService {
 
@@ -30,4 +28,8 @@ public interface BoardService {
 	public void setPublic(Map<String, Integer> map) throws Exception;
 
     Object getAiRecommendation(List<AttractionInfoDto> list);
+
+	void setDayPlans(ListTripPlanDto list);
+
+	List<TripPlanDto> getDayPlans(int articleNo);
 }
