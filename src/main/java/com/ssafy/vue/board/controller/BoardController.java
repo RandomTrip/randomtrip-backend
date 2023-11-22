@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 import com.ssafy.model.AttractionInfoDto;
 import com.ssafy.model.service.AttractionAiService;
 import com.ssafy.model.service.AttractionServiceImpl;
-import com.ssafy.vue.board.model.CommentDto;
+import com.ssafy.vue.board.model.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,8 +31,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ssafy.vue.board.model.BoardDto;
-import com.ssafy.vue.board.model.BoardListDto;
 import com.ssafy.vue.board.model.service.BoardService;
 
 import io.swagger.annotations.Api;
@@ -171,6 +169,44 @@ public class BoardController {
 		}
 	}
 
+
+
+
+	@ApiOperation(value = "여행정보 목록 (나의 여행 계획, 공유된 여행 계획)", notes = "" +
+			"\n" +
+			"http://localhost/vue/board/dayPlans: 일차별 여행지의 데이터를 저장한다.\n" +
+			"수정할때도 그냥 이렇게 요청 보내면 됩니다." +
+			"\n" +
+			"\n" +
+			"예시)\n " +
+			"get \n" +
+			"http://localhost/vue/board/daysPlan" +
+			"{\n" +
+			"    \"plans\": [\n" +
+			"        {\n" +
+			"            \"articleNo\": 4,\n" +
+			"            \"dayNo\": 1,\n" +
+			"            \"listAttraction\": [125411,125418,125431]\n" +
+			"        },\n" +
+			"        {\n" +
+			"            \"articleNo\": 4,\n" +
+			"            \"dayNo\": 2,\n" +
+			"            \"listAttraction\": [125465,125478]\n" +
+			"        }\n" +
+			"    ]\n" +
+			"}")
+	@GetMapping("daysPlan")
+	public void setDayPlans(
+			@RequestBody @ApiParam(value = "일차별 여행지 데이터") ListTripPlanDto list) {
+
+		System.out.println(list);
+		boardService.setDayPlans(list);
+
+	}
+
+
+
+
 	// @ApiOperation(value = "공유 가능 설정", notes = "http://localhost/vue/board/public?articleno=3&ispublic=1  : 3번 게시물을 공유 가능(1)으로 수정", response = BoardDto.class)
 	// @PutMapping("public")
 	public BoardDto setPublic(
@@ -190,7 +226,7 @@ public class BoardController {
 
 
 
-	@ApiOperation(value = "여행 계획 상세보기 + 댓글", notes = "글번호에 해당하는 게시글과 댓글의 정보를 반환한다. attraction list의 정보도 여기서 전부 받아옵니다.", response = BoardDto.class)
+	@ApiOperation(value = "여행 계획 상세보기 + 댓글 + 여행지 리스트 + 일별 여행 계획", notes = "글번호에 해당하는 게시글과 댓글의 정보를 반환한다. 전체 여행지의 정보와, 일별 여행지 이동 계획을 받아옵니다..", response = BoardDto.class)
 	@GetMapping("/{articleno}")
 	public Map<String, Object> getArticle(
 			@PathVariable("articleno") @ApiParam(value = "얻어올 글의 글번호.", required = true) int articleno)
@@ -201,17 +237,27 @@ public class BoardController {
 		BoardDto dto = boardService.getArticle(articleno);
 		List<AttractionInfoDto> list = new MainController().getbyContentIdList(dto.getAttractionList());
 		List<CommentDto> commentList = boardService.listComment(dto);
+		List<TripPlanDto> tripPlanList = boardService.getDayPlans(articleno);
+
 		Map<String, Object> map = new HashMap<>();
 		map.put("board", dto);
 		map.put("attractionInfo", list);
 		map.put("comment", commentList);
+		map.put("daysPlan", tripPlanList);
 
 
 		return map;
 	}
 
 
-	@ApiOperation(value = "AI의 추천을 받습니다.", notes = "여행지 리스트를 받고, 동선에서 가까운 여행지중 여행 테마에 맞는 여행지들을 ai기반으로 추천 받는다.", response = BoardDto.class)
+	@ApiOperation(value = "AI의 추천을 받습니다.", notes = "여행지 리스트를 받고, 동선에서 가까운 여행지중 여행 테마에 맞는 여행지들을 ai기반으로 추천 받는다." +
+			"" +
+			"예시)\n" +
+			"post\n" +
+			"http://localhost/vue/board/ai" +
+			"{\n" +
+			"    \"attractions\": [\"125411\",\"125418\",\"125418\",\"125418\"]\n" +
+			"}", response = BoardDto.class)
 	@PostMapping("/ai")
 	public Object getAIRecommendation(
 			@ApiParam(value = "여행지의 리스트", required = true) @RequestBody Map<String, List<String>> requestBody)

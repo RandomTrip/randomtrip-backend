@@ -4,11 +4,8 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
-import com.ssafy.vue.board.model.CommentDto;
+import com.ssafy.vue.board.model.*;
 import org.apache.ibatis.annotations.Mapper;
-
-import com.ssafy.vue.board.model.BoardDto;
-import com.ssafy.vue.board.model.FileInfoDto;
 
 @Mapper
 public interface BoardMapper {
@@ -40,6 +37,13 @@ public interface BoardMapper {
 	void deleteFile(int articleNo) throws Exception;
 
 	void deleteArticle(int articleNo) throws SQLException;
+
+	void setDayPlan(TripPlanDto dto);
+
+	void deleteDayPlan(int articleNo);
+
+	List<TripPlanDto> getDayPlans(int articleNo);
+
 
 //	List<FileInfoDto> fileInfoList(int articleNo) throws Exception;
 	

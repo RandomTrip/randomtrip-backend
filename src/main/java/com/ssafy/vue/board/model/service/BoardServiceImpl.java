@@ -9,14 +9,11 @@ import java.util.stream.Collectors;
 
 import com.ssafy.model.AttractionInfoDto;
 import com.ssafy.model.service.AttractionAiService;
-import com.ssafy.vue.board.model.CommentDto;
+import com.ssafy.vue.board.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ssafy.vue.board.model.BoardDto;
-import com.ssafy.vue.board.model.BoardListDto;
-import com.ssafy.vue.board.model.FileInfoDto;
 import com.ssafy.vue.board.model.mapper.BoardMapper;
 
 @Service
@@ -189,6 +186,21 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public Object getAiRecommendation(List<AttractionInfoDto> list) {
 		return attractionAiService.getAiRecommendation(list);
+	}
+
+	@Override
+	public void setDayPlans(ListTripPlanDto list) {
+		List<TripPlanDto> tripList = list.getPlans();
+		boardMapper.deleteDayPlan(tripList.get(0).getArticleNo());
+		for(TripPlanDto dto : tripList) {
+			boardMapper.setDayPlan(dto);
+		}
+	}
+
+	@Override
+	public List<TripPlanDto> getDayPlans(int articleNo) {
+
+		return boardMapper.getDayPlans(articleNo);
 	}
 
 

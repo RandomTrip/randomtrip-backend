@@ -112,3 +112,12 @@ ADD COLUMN like_count INT DEFAULT 0;
 
 
 
+-- 여행 일차별 데이터 저장하는 테이블 생성
+
+CREATE TABLE trip_plan (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    article_no INT NOT NULL,
+    day_no INT,
+    attraction_list VARCHAR(45),
+    CONSTRAINT fk_board_article_no FOREIGN KEY (article_no) REFERENCES board(article_no) ON DELETE CASCADE
+);

@@ -27,8 +27,14 @@
 		<result column="content" property="content"/>
 		<result column="register_time" property="registerTime"/>
 	</resultMap>
-	
-<!--	<resultMap type="boardDto" id="viewArticle" extends="article">-->
+
+	<resultMap type="tripPlanDto" id="tripPlan">
+		<result column="article_no" property="articleNo"/>
+		<result column="day_no" property="dayNo"/>
+		<result column="attraction_list" property="attractionList"/>
+	</resultMap>
+
+	<!--	<resultMap type="boardDto" id="viewArticle" extends="article">-->
 <!--		<collection property="fileInfos" column="article_no" javaType="list" ofType="fileInfoDto" select="fileInfoList"/>-->
 <!--	</resultMap>-->
 	
@@ -52,9 +58,20 @@
 		VALUES (#{articleNo}, #{userId}, #{content})
 	</insert>
 
+	<insert id="setDayPlan" parameterType="tripPlanDto">
+		INSERT INTO trip_plan (article_no, day_no, attraction_list)
+		VALUES (#{articleNo}, #{dayNo}, #{attractionList})
+	</insert>
+
+
+	<delete id="deleteDayPlan" parameterType="int">
+		DELETE FROM trip_plan WHERE article_no = #{articleNo}
+	</delete>
+
 	<delete id="deleteComment" parameterType="commentDto">
 		DELETE FROM COMMENTS WHERE comment_no = #{commentNo}
 	</delete>
+
 
 
 
@@ -76,6 +93,13 @@
 			</if>
 		</if>
 	</sql>
+
+
+	<select id="getDayPlans" parameterType="int" resultMap="tripPlan">
+		select article_no, day_no, attraction_list
+		from trip_plan
+		where article_no = #{articleNo}
+	</select>
 
 	<select id="listArticle" parameterType="map" resultMap="article">
 		select b.article_no, b.user_id, b.subject, b.content, b.hit, b.register_time, m.user_name, b.is_public, b.category, b.attraction_list
