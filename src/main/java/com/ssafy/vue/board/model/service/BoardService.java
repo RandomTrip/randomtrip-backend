@@ -8,7 +8,7 @@ import com.ssafy.vue.board.model.*;
 
 public interface BoardService {
 
-	void writeArticle(BoardDto boardDto) throws Exception;
+	int writeArticle(BoardDto boardDto) throws Exception;
 	void writeComment(CommentDto commentDto) throws Exception;
 	public void modifyComment(CommentDto commentDto) throws Exception;
 	void deleteComment(CommentDto commentDto) throws Exception;
@@ -32,4 +32,6 @@ public interface BoardService {
 	void setDayPlans(ListTripPlanDto list);
 
 	List<TripPlanDto> getDayPlans(int articleNo);
+
+	ListTripPlanDto settingDayPlansData(ListTripPlanDto list, int no);
 }

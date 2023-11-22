@@ -1,10 +1,7 @@
 package com.ssafy.vue.board.model.service;
 
 import java.io.File;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import com.ssafy.model.AttractionInfoDto;
@@ -31,11 +28,13 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	@Transactional
-	public void writeArticle(BoardDto boardDto) throws Exception {
+	public int writeArticle(BoardDto boardDto) throws Exception {
 		boardDto.setAttractionList(boardDto.getListAttraction().stream().collect(Collectors.joining(",")));
 		// 서버 저장용 String 데이터 설정
 		System.out.println(boardDto.getAttractionList());
 		boardMapper.writeArticle(boardDto);
+
+		return boardDto.getArticleNo();
 	}
 
 	@Override
@@ -201,6 +200,18 @@ public class BoardServiceImpl implements BoardService {
 	public List<TripPlanDto> getDayPlans(int articleNo) {
 
 		return boardMapper.getDayPlans(articleNo);
+	}
+
+	@Override
+	public ListTripPlanDto settingDayPlansData(ListTripPlanDto list, int no) {
+		ArrayList<TripPlanDto> l = list.getPlans();
+
+		for(int i = 0; i < l.size(); i++) {
+			l.get(i).setArticleNo(no);
+		}
+		list.setPlans(l);
+
+		return list;
 	}
 
 

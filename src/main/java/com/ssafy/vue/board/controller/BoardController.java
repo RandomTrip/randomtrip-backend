@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 import com.ssafy.model.AttractionInfoDto;
 import com.ssafy.model.service.AttractionAiService;
 import com.ssafy.model.service.AttractionServiceImpl;
+import com.ssafy.vue.board.BoardBigData;
 import com.ssafy.vue.board.model.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -61,29 +62,69 @@ public class BoardController {
 
 
 	@ApiOperation(value = "나의 여행 계획작성", notes = "나의 여행 계획. " +
+			"\npostData 와 daysPlan 를 같이 보내주면 됩니다.\n" +
 			" - post 예시" +
 			"post\n" +
 			"http://localhost/vue/board" +
 			"{\n" +
+			"  \"postData\": {\n" +
 			"    \"userId\": \"admin\",\n" +
 			"    \"userName\": \"사용자 이름\",\n" +
 			"    \"subject\": \"글 제목\",\n" +
 			"    \"content\": \"글 내용\",\n" +
-			"    \"listAttraction\": [\"125411\", \"125418\", \"125431\"],\n" +
+			"    \"listAttraction\": [\n" +
+			"      \"125411\",\n" +
+			"      \"125418\",\n" +
+			"      \"125431\"\n" +
+			"    ],\n" +
 			"    \"isPublic\": 1,\n" +
 			"    \"category\": 1\n" +
-			"} " +
+			"  },\n" +
+			"  \"daysPlan\": {\n" +
+			"    \"plans\": [\n" +
+			"      {\n" +
+			"        \"articleNo\": null,\n" +
+			"        \"dayNo\": 1,\n" +
+			"        \"listAttraction\": [\n" +
+			"          125411,\n" +
+			"          125418,\n" +
+			"          125431\n" +
+			"        ]\n" +
+			"      },\n" +
+			"      {\n" +
+			"        \"articleNo\": null,\n" +
+			"        \"dayNo\": 2,\n" +
+			"        \"listAttraction\": [\n" +
+			"          125465,\n" +
+			"          125478\n" +
+			"        ]\n" +
+			"      }\n" +
+			"    ]\n" +
+			"  }\n" +
+			"}" +
 			"" +
 			"isPublic 는 공개 여부 (0: 비공개, 1: 공개) 공개 여부는 나중에 수정 가능")
 	@PostMapping
 	public ResponseEntity<?> writeArticle(
-			@RequestBody @ApiParam(value = "게시글 정보.", required = true) BoardDto boardDto) {
+			@RequestBody @ApiParam(value = "게시글 정보.", required = true) BoardBigData data) {
+
+
+		BoardDto boardDto = data.getPostData();
+		ListTripPlanDto list = data.getDaysPlan();
+
+
+
 		logger.info("writeArticle boardDto - {}", boardDto);
 		try {
 			System.out.println(boardDto);
-			boardService.writeArticle(boardDto);
+			int no = boardService.writeArticle(boardDto);
 
-			//			return ResponseEntity.ok().build();
+			System.out.println(no);
+
+			ListTripPlanDto dto = boardService.settingDayPlansData(list, no);
+
+			setDayPlans(dto);
+
 			return new ResponseEntity<Void>(HttpStatus.CREATED);
 		} catch (Exception e) {
 			return exceptionHandling(e);
@@ -171,7 +212,7 @@ public class BoardController {
 
 
 
-
+/*
 	@ApiOperation(value = "여행정보 목록 (나의 여행 계획, 공유된 여행 계획)", notes = "" +
 			"\n" +
 			"http://localhost/vue/board/dayPlans: 일차별 여행지의 데이터를 저장한다.\n" +
@@ -196,6 +237,8 @@ public class BoardController {
 			"    ]\n" +
 			"}")
 	@GetMapping("daysPlan")
+*/
+
 	public void setDayPlans(
 			@RequestBody @ApiParam(value = "일차별 여행지 데이터") ListTripPlanDto list) {
 
@@ -256,7 +299,7 @@ public class BoardController {
 			"post\n" +
 			"http://localhost/vue/board/ai" +
 			"{\n" +
-			"    \"attractions\": [\"125411\",\"125418\",\"125418\",\"125418\"]\n" +
+			"    \"attractions\": [2848347,2848335,2848039]\n" +
 			"}", response = BoardDto.class)
 	@PostMapping("/ai")
 	public Object getAIRecommendation(
